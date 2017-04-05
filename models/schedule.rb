@@ -2,7 +2,7 @@ require 'json'
 require 'base64'
 require 'rbnacl/libsodium'
 
-# Holds a full configuration document information
+# Holds a full schedule document information
 class Schedule
   STORE_DIR = 'db/'.freeze
 
@@ -24,7 +24,7 @@ class Schedule
   end
 
   def save
-    File.open(STORE_DIR + @id + '.txt', 'w') do |file|
+    File.open(STORE_DIR + @id.to_s + '.txt', 'w') do |file|
       file.write(to_json)
     end
 
@@ -34,8 +34,8 @@ class Schedule
   end
 
   def self.find(find_id)
-    config_file = File.read(STORE_DIR + find_id + '.txt')
-    Configuration.new JSON.parse(config_file)
+    timeseries_file = File.read(STORE_DIR + find_id + '.txt')
+    Schedule.new JSON.parse(timeseries_file)
   end
 
   def self.all

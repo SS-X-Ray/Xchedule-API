@@ -43,7 +43,7 @@ class XcheduleAPI < Sinatra::Base
         halt 400, "Could not store timeseries: #{new_timeseries}"
       end
 
-      redirect '/api/v1/schedules/' + new_timeseries.id + '.json'
+      redirect "/#{API_VER}/schedule/" + new_timeseries.id.to_s + '.json'
     rescue => e
       logger.info "FAILED to create new timeseries: #{e.inspect}"
       status 400
