@@ -12,6 +12,10 @@ class XcheduleAPI < Sinatra::Base
 
   API_VER = 'api/v1'.freeze
 
+  get '/?' do
+    'Xchedule web API up at /api/v1'
+  end
+
   get "/#{API_VER}/schedule/" do
     content_type 'application/json'
 
