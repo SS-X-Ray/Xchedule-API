@@ -1,15 +1,10 @@
-require 'sinatra'
+require_relative 'config/environments'
+require_relative 'models/init'
 require 'json'
 require 'base64'
-require_relative 'models/schedule'
 
 # configure based on environment
 class XcheduleAPI < Sinatra::Base
-  configure do
-    enable :logging
-    Schedule.setup
-  end
-
   API_VER = 'api/v1'.freeze
 
   get '/?' do
