@@ -2,7 +2,7 @@ require 'json'
 require 'sequel'
 
 # Holds a full Activity's information
-class ActivityUser < Sequel::Model
+class Particapant < Sequel::Model
   many_to_one :activity
 
   def to_json(options = {})
