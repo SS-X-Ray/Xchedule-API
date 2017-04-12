@@ -3,7 +3,7 @@ require 'sequel'
 
 Sequel.migration do
   change do
-    create_table(:activity_user) do
+    create_table(:activityusers) do
       primary_key :id
       String :activity_id
       String :user_id
