@@ -44,3 +44,7 @@ namespace :db do
   desc 'Perform migration reset (full rollback and migration)'
   task reset: %i[rollback migrate]
 end
+
+task :run do
+  sh 'rerun "rackup -p 9000"'
+end
