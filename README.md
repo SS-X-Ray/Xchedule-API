@@ -1,4 +1,5 @@
 # Xchedule API
+[![Dependency Status](https://gemnasium.com/badges/github.com/SS-X-Ray/Xchedule-API.svg)](https://gemnasium.com/github.com/SS-X-Ray/Xchedule-API)
 This API is for the Xchedule App. You can retrieve, search and store data with specific route.
 
 
