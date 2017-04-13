@@ -5,7 +5,7 @@ Sequel.migration do
   change do
     create_table(:participants) do
       primary_key :id
-      String :activity_id
+      foreign_key :activity_id
       String :user_id
     end
   end

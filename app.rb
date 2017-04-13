@@ -44,28 +44,29 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       update_data = JSON.parse(request.body.read)
-      old_record = Activity.find(id: update_data[:id])
+      old_record = Activity[update_data['activity_id']]
 
       update_data.keys.each do |key|
-        if key == :id
-          continue
-        else
+        if key != 'activity_id'
           old_record.send("#{key}=", update_data[key])
           old_record.save
         end
       end
     rescue => e
-      logger.info "FAILED to update partial Activity info: #{e.inspect}"
-      status 400
+      error_msg = "FAILED to update partial Activity info: #{e.inspect}"
+      logger.info error_msg
+      halt 400, error_msg
     end
+    status 201
   end
 
   get "/#{API_VER}/participant/:activity_id" do
     content_type 'application/json'
 
     begin
-      participant = Participant.find(activity_id: params[:activity_id])
-      output = { User_id: participant.user_id }
+      participants = Activity.find(id: params[:activity_id]).participants
+      participants.map!(&:user_id)
+      output = { User_ids: participants }
       JSON.pretty_generate(output)
     rescue => e
       logger.info "FAILED to GET Participant: #{e.inspect}"
@@ -78,10 +79,12 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       new_data = JSON.parse(request.body.read)
-      Participant.create(new_data)
+      activity = Activity[new_data['activity_id']]
+      activity.add_participant(user_id: new_data['user_id'])
     rescue => e
-      logger.info "FAILED to create new Activity: #{e.inspect}"
-      status 400
+      error_msg = "FAILED to create new participant in activity: #{e.inspect}"
+      logger.info error_msg
+      halt 400, error_msg
     end
     status 201
   end

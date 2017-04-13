@@ -13,7 +13,7 @@ end
 
 desc 'Run all the tests'
 Rake::TestTask.new(:spec) do |t|
-  t.pattern = 'specs/*_spec.rb'
+  t.pattern = 'spec/*_spec.rb'
   t.warning = false
 end
 
@@ -46,5 +46,5 @@ namespace :db do
 end
 
 task :run do
-  sh 'rerun "rackup -p 9000"'
+  sh 'rerun "rackup -p 9292"'
 end

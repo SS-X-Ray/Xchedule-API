@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe 'Testing Acstivity resource routes' do
+describe 'Testing Activity resource routes' do
   before do
     Activity.dataset.delete
     Participant.dataset.delete
@@ -22,7 +22,7 @@ describe 'Testing Acstivity resource routes' do
       _(last_response.status).must_equal 200
 
       results = JSON.parse(last_response.body)
-      _(results[:Name]).must_equal new_activity.name
+      _(results['Name']).must_equal new_activity.name
     end
 
     it 'SAD: should not find non-existent activity' do
@@ -42,9 +42,9 @@ describe 'Testing Acstivity resource routes' do
 
     it 'SAD: should not add a list of possible_time to non-existing activity' do
       req_header = { 'CONTENT_TYPE' => 'application/json' }
-      req_body = { activity_id: "#{invalid_id(Activity)}" , possible_time: '[1, 2, 3]' }.to_json
+      req_body = { activity_id: "#{invalid_id(Activity)}", possible_time: '[1, 2, 3]' }.to_json
       patch '/api/v1/activity/', req_body, req_header
-      _(last_response.status).must_equal 404
+      _(last_response.status).must_equal 400
     end
 
     it 'HAPPY: should add result time to existing activity' do
@@ -57,9 +57,9 @@ describe 'Testing Acstivity resource routes' do
 
     it 'SAD: should not add result time to non-existing activity' do
       req_header = { 'CONTENT_TYPE' => 'application/json' }
-      req_body = { activity_id: "#{invalid_id(Activity)}" , result_time: 1 }.to_json
+      req_body = { activity_id: "#{invalid_id(Activity)}", result_time: 1 }.to_json
       patch '/api/v1/activity/', req_body, req_header
-      _(last_response.status).must_equal 404
+      _(last_response.status).must_equal 400
     end
   end
 end
