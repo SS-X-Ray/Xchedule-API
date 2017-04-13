@@ -6,12 +6,13 @@ gem 'puma'
 gem 'sequel'
 gem 'sinatra'
 
+gem 'hirb'
+gem 'tux'
+
 gem 'rbnacl-libsodium'
 
 group :development do
-  gem 'hirb'
   gem 'rerun'
-  gem 'tux'
 end
 
 group :test do

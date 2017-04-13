@@ -1,6 +1,7 @@
 require './app'
 require 'rake/testtask'
 
+# Print current RACK_ENV it's using
 puts "Environment: #{ENV['RACK_ENV'] || 'development'}"
 
 task default: [:spec]
@@ -12,7 +13,7 @@ end
 
 desc 'Run all the tests'
 Rake::TestTask.new(:spec) do |t|
-  t.pattern = 'specs/*_spec.rb'
+  t.pattern = 'spec/*_spec.rb'
   t.warning = false
 end
 
@@ -28,11 +29,12 @@ namespace :db do
   desc 'Run migrations'
   task :migrate do
     puts 'Migrating database to latest'
+    # DB is a global constant in config/environment.rb
     Sequel::Migrator.run(DB, 'db/migrations')
   end
 
   desc 'Rollback database to specified target'
-  # e.g. $ rake db:rollback[100]
+  # e.g. $ rake db:rollback[001]
   task :rollback, [:target] do |_, args|
     target = args[:target] ? args[:target] : 0
     puts "Rolling back database to #{target}"
@@ -41,4 +43,8 @@ namespace :db do
 
   desc 'Perform migration reset (full rollback and migration)'
   task reset: %i[rollback migrate]
+end
+
+task :run do
+  sh 'rerun "rackup -p 9292"'
 end
