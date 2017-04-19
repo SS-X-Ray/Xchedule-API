@@ -28,13 +28,13 @@ describe 'Testing Participant resource routes' do
 
   describe 'Getting participants' do
     it 'HAPPY: should find existing participant' do
-      participant = Activity.create(name: 'meeting')
-                            .add_participant(user_id: 1)
+      activity =  Activity.create(name: 'meeting')
+      participant = activity.add_participant(user_id: 1)
 
       get "api/v1/participant/#{participant.activity_id}"
       _(last_response.status).must_equal 200
       parsed_participant = JSON.parse(last_response.body)
-      _(parsed_participant['User_ids'][0]).must_equal '1'
+      _(parsed_participant['User_ids'][0]).must_equal participant.user_id
     end
 
     it 'SAD: should not find non-existant activity and participant' do

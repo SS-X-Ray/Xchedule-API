@@ -4,11 +4,11 @@ require 'sequel'
 Sequel.migration do
   change do
     create_table(:activities) do
-      primary_key :id
+      String :id, type: :uuid, primary_key: true
       String :name
-      String :possible_time
-      String :result_time
-      String :location
+      String :possible_time_secure, text: true
+      String :result_time_secure, text: true
+      String :location_secure, text: true
     end
   end
 end

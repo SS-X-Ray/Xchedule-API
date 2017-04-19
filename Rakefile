@@ -1,4 +1,4 @@
-require './app'
+require './init.rb'
 require 'rake/testtask'
 
 # Print current RACK_ENV it's using
@@ -47,4 +47,11 @@ end
 
 task :run do
   sh 'rerun "rackup -p 9292"'
+end
+
+namespace :crypto do
+  desc 'Create sample cryptographic key for database'
+  task :db_key do
+    puts "DB_KEY: #{SecureDB.generate_key}"
+  end
 end
