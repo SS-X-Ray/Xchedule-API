@@ -3,8 +3,9 @@ require 'sequel'
 
 # Holds a full Activity's information
 class Activity < Sequel::Model
+  plugin :uuid, field: :id
   one_to_many :participants
-
+  set_allowed_columns :name, :possible_time, :result_time, :location
   def to_json(options = {})
     JSON({ id: id,
            name: name,
