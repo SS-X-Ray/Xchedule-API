@@ -2,7 +2,6 @@ require 'sinatra'
 
 # /api/v1/activity routes only
 class XcheduleAPI < Sinatra::Base
-  API_VER = 'api/v1'.freeze
 
   get "/#{API_VER}/activity/:id" do
     content_type 'application/json'
