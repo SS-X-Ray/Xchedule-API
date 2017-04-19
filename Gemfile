@@ -9,6 +9,7 @@ gem 'sinatra'
 gem 'hirb'
 gem 'tux'
 
+gem 'econfig'
 gem 'rbnacl-libsodium'
 
 group :development do

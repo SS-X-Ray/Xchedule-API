@@ -3,6 +3,7 @@ GEM
   specs:
     ast (2.3.0)
     bond (0.5.1)
+    econfig (2.0.0)
     ffi (1.9.18)
     hirb (0.7.3)
     json (2.0.3)
@@ -67,6 +68,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  econfig
   hirb
   json
   minitest
@@ -87,4 +89,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
