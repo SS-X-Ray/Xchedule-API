@@ -13,11 +13,6 @@ class XcheduleAPI < Sinatra::Base
     SecureDB.setup(settings.config)
   end
 
-  before do
-    host_url = "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
-    @request_url = URI.join(host_url, request.path.to_s)
-  end
-
   get '/?' do
     'Xchedule web API up at /api/v1'
   end
