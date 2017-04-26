@@ -23,9 +23,22 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       new_data = JSON.parse(request.body.read)
-      Activity.create(new_data)
+      CreateActivityForOrganizer.call(new_data)
     rescue => e
       logger.info "FAILED to create new Activity: #{e.inspect}"
+      status 400
+    end
+    status 201
+  end
+
+  post "/#{API_VER}/activity/participant/?" do
+    content_type 'application/json'
+
+    begin
+      new_data = JSON.parse(request.body.read)
+      AddParticipantToActivity.call(new_data)
+    rescue => e
+      logger.info "FAILED to add participant to Activity: #{e.inspect}"
       status 400
     end
     status 201
@@ -36,14 +49,7 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       update_data = JSON.parse(request.body.read)
-      old_record = Activity[update_data['activity_id']]
-
-      update_data.keys.each do |key|
-        if key != 'activity_id'
-          old_record.send("#{key}=", update_data[key])
-          old_record.save
-        end
-      end
+      UpdateActivity.call(update_data);
     rescue => e
       error_msg = "FAILED to update partial Activity info: #{e.inspect}"
       logger.info error_msg
