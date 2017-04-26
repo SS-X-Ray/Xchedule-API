@@ -7,7 +7,12 @@ require_relative '../lib/secure_db'
 # Holds a full Activity's information
 class Activity < Sequel::Model
   plugin :uuid, field: :id
-  one_to_many :participants
+  many_to_one :organizer, class: :Account
+  many_to_many :participants,
+               class: :Account, join_table: :accounts_activities,
+               left_key: :activity_id, right_key: :participant_id
+  plugin :timestamps, update_on_create: true
+  plugin :association_dependencies, organizer: :destroy
 
   def possible_time=(ptime_plain)
     self.possible_time_secure = SecureDB.encrypt(ptime_plain)
@@ -34,7 +39,7 @@ class Activity < Sequel::Model
   end
 
   set_allowed_columns :name, :possible_time, :result_time, :location
-  
+
   def to_json(options = {})
     JSON({ id: id,
            name: name,
