@@ -49,7 +49,7 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       update_data = JSON.parse(request.body.read)
-      UpdateActivity.call(update_data);
+      UpdateActivity.call(update_data)
     rescue => e
       error_msg = "FAILED to update partial Activity info: #{e.inspect}"
       logger.info error_msg
