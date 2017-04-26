@@ -1,0 +1,7 @@
+---
+- :username: xraymember
+  :password: xraypassword
+  :email: xray@xmail.com
+- :username: iamuser
+  :password: thisismypw
+  :email: user@xmail.com
