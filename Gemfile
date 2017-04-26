@@ -14,6 +14,7 @@ gem 'rbnacl-libsodium'
 
 group :development do
   gem 'rerun'
+  gem 'sequel-seed'
 end
 
 group :test do
