@@ -39,9 +39,6 @@ class XcheduleAPI < Sinatra::Base
       halt 400
     end
 
-    new_location = URI.join(@request_url.to_s + '/', new_account.username).to_s
-
     status 201
-    headers('Location' => new_location)
   end
 end

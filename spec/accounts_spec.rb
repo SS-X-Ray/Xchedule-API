@@ -2,12 +2,13 @@ require_relative './spec_helper'
 
 describe 'Testing unit level properties of accounts' do
   before do
-    Account.dataset.destroy
     Activity.dataset.destroy
+    Account.dataset.destroy
 
     @original_password = 'mypassword'
-    @account = CreateAccount.call(username: 'xray', email: 'xray@nthu.edu.tw',
-                                  password: @original_password)
+    acc_info = { username: 'xray', email: 'xray@nthu.edu.tw',
+                 password: @original_password }
+    @account = CreateAccount.call(acc_info)
   end
 
   it 'HAPPY: should hash the password' do
