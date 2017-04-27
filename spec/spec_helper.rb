@@ -17,3 +17,4 @@ def invalid_id(resource)
 end
 
 API_VER = '/api/v1'.freeze
+SAD_ACCOUNT_ID = 'sad_account'.freeze

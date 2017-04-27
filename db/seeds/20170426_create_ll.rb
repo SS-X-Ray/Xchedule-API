@@ -18,12 +18,12 @@ def create_accounts
 end
 
 def create_activities
-  acti_info_each = ALL_PROJ_INFO.each
+  acti_info_each = ALL_ACTIVITIES_INFO.each
   accounts_cycle = Account.all.cycle
   loop do
     acti_info = acti_info_each.next
     account = accounts_cycle.next
     CreateActivityForOrganizer.call(organizer_id: account.id, name: acti_info[:name],
-                               location_secure: acti_info[:location])
+                               location: acti_info[:location])
   end
 end
