@@ -6,7 +6,6 @@ require_relative '../lib/secure_db'
 
 # Holds a full Activity's information
 class Activity < Sequel::Model
-  plugin :uuid, field: :id
   many_to_one :organizer, class: :Account
   many_to_many :participants,
                class: :Account, join_table: :accounts_activities,
