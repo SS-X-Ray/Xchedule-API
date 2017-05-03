@@ -15,8 +15,8 @@ describe 'Testing Activity resource routes' do
 
     it 'should organize one new Activity' do
       e1 = CreateActivityForOrganizer.call(organizer_id: @acc1.id,
-                                            name: 'meeting',
-                                            location: 'CTM321')
+                                           name: 'meeting',
+                                           location: 'CTM321')
       e1.organizer_id.must_equal @acc1.id
     end
 
@@ -26,7 +26,7 @@ describe 'Testing Activity resource routes' do
                                            location: 'CTM321')
       AddParticipantToActivity.call(participant_id: @acc2.id,
                                     activity_id: e2.id)
-      @acc2.activities.first.must_equal e2
+      @acc2.activities.first.id.must_equal e2.id
     end
   end
 end
