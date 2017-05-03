@@ -11,7 +11,8 @@ class Activity < Sequel::Model
                class: :Account, join_table: :accounts_activities,
                left_key: :activity_id, right_key: :participant_id
   plugin :timestamps, update_on_create: true
-  plugin :association_dependencies, organizer: :destroy
+  plugin :association_dependencies
+  add_association_dependencies participants: :nullify
 
   def possible_time=(ptime_plain)
     self.possible_time_secure = SecureDB.encrypt(ptime_plain)
