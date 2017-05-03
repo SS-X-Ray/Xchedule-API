@@ -36,12 +36,15 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       new_data = JsonRequestBody.parse_symbolize(request.body.read)
-      AddParticipantToActivity.call(new_data)
+      if AddParticipantToActivity.call(new_data)
+        status 201
+      else
+        halt 400, "No such activity #{new_data[:activity_id]} or is already an organizer #{new_data[:participant_id]}"
+      end
     rescue => e
       logger.info "FAILED to add participant to Activity: #{e.inspect}"
       status 400
     end
-    status 201
   end
 
   patch "/#{API_VER}/activity/?" do
