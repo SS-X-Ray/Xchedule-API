@@ -16,7 +16,7 @@ class XcheduleAPI < Sinatra::Base
     end
   end
 
-  get 'api/v1/account/participants/:participant_id' do
+  get '/api/v1/account/participants/:participant_id' do
     content_type 'application/json'
 
     participant_id = params[:participant_id]
