@@ -23,7 +23,8 @@ def create_activities
   loop do
     acti_info = acti_info_each.next
     account = accounts_cycle.next
-    CreateActivityForOrganizer.call(organizer_id: account.id, name: acti_info[:name],
-                               location: acti_info[:location])
+    CreateActivityForOrganizer.call(organizer_id: account.id,
+                                    name: acti_info[:name],
+                                    location: acti_info[:location])
   end
 end
