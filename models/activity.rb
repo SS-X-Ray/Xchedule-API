@@ -11,6 +11,10 @@ class Activity < Sequel::Model
                class: :Account, join_table: :accounts_activities,
                left_key: :activity_id, right_key: :participant_id
   plugin :timestamps, update_on_create: true
+
+  plugin :whitelist_security
+  set_allowed_columns :name, :possible_time, :result_time, :location
+
   plugin :association_dependencies
   add_association_dependencies participants: :nullify
 
@@ -37,8 +41,6 @@ class Activity < Sequel::Model
   def location
     SecureDB.decrypt(location_secure)
   end
-
-  set_allowed_columns :name, :possible_time, :result_time, :location
 
   def to_json(options = {})
     JSON({ id: id,
