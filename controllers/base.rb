@@ -13,6 +13,17 @@ class XcheduleAPI < Sinatra::Base
     SecureDB.setup(settings.config)
   end
 
+  def secure_request?
+    request.scheme.casecmp(settings.config.SECURE_SCHEME).zero?
+  end
+
+  before do
+    halt(403, 'Use HTTPS only') unless secure_request?
+
+    host_url = "#{settings.config.SECURE_SCHEME}://#{request.env['HTTP_HOST']}"
+    @request_url = URI.join(host_url, request.path.to_s)
+  end
+
   get '/?' do
     'Xchedule web API up at /api/v1'
   end
