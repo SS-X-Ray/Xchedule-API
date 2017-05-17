@@ -12,7 +12,7 @@ Check whether API is alive
 
 * GET `api/v1/account/:id`
 **Provide**: *Account ID*
-**Get**: *Account Info*
+**Get**: *{data: Account Info,  relationships: All activities one organized}*
 
 * POST `api/v1/account/`
 **Provide**: *{ username: "", email: "", password: "" }*
