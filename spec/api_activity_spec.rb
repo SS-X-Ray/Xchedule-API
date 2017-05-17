@@ -24,7 +24,10 @@ describe 'Testing Activity resource routes' do
 
   describe 'Can find existing activity' do
     it 'HAPPY: should find an existing activity' do
-      get "/api/v1/activity/#{@new_activity.id}"
+      auth = AuthenticateAccount.call(username: 'xray',
+                                      password: 'mypassword')
+      auth_headers = { 'HTTP_AUTHORIZATION' => "Bearer #{auth[:auth_token]}" }
+      get "/api/v1/activity/#{@new_activity.id}", nil, auth_headers
       _(last_response.status).must_equal 200
 
       results = JSON.parse(last_response.body)
