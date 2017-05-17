@@ -17,19 +17,6 @@ class XcheduleAPI < Sinatra::Base
     end
   end
 
-  post "/#{API_VER}/activity/?" do
-    content_type 'application/json'
-
-    begin
-      new_data = JsonRequestBody.parse_symbolize(request.body.read)
-      CreateActivityForOrganizer.call(new_data)
-    rescue => e
-      logger.info "FAILED to create new Activity: #{e.inspect}"
-      status 400
-    end
-    status 201
-  end
-
   post "/#{API_VER}/activity/participant/?" do
     content_type 'application/json'
 
