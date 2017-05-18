@@ -52,7 +52,7 @@ class Activity < Sequel::Model
            },
            relationships: {
              organizer: organizer,
-             participant: participant
+             participants: participants
            }
          },
          options)
