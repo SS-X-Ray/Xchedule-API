@@ -20,8 +20,10 @@ class XcheduleAPI < Sinatra::Base
 
   def authenticated_account(env)
     scheme, auth_token = env['HTTP_AUTHORIZATION'].split(' ')
+    return nil unless scheme.match?(/^Bearer$/i)
     account_payload = AuthToken.payload(auth_token)
-    scheme.match?(/^Bearer$/i) ? account_payload : nil
+    Account[account_payload['id']]
+    # scheme.match?(/^Bearer$/i) ? account_payload : nil
   end
 
   def authorized_account?(env, id)

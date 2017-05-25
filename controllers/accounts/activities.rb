@@ -3,17 +3,20 @@ require 'sinatra'
 # /api/v1/activities routes only
 class XcheduleAPI < Sinatra::Base
   # Get all activities for an account
-  get '/api/v1/accounts/:id/activities/?' do
+  get '/api/v1/accounts/:account_id/activities/?' do
     content_type 'application/json'
 
     begin
-      id = params[:id]
-      halt 401 unless authorized_account?(env, id)
-      all_activities = FindAllAccountActivities.call(id: id)
-      JSON.pretty_generate(data: all_activities)
-    rescue => e
-      logger.info "FAILED to find activities for user: #{e}"
-      halt 404
+      requesting_account = authenticated_account(env)
+      target_account = Account[params[:account_id]]
+
+      viewable_activities =
+        ActivityPolicy::Scope.new(requesting_account, target_account).viewable
+      JSON.pretty_generate(data: viewable_activities)
+    rescue
+      error_msg = "FAILED to find activities for user: #{params[:account_id]}"
+      logger.info error_msg
+      halt 404, error_msg
     end
   end
 

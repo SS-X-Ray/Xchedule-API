@@ -17,6 +17,7 @@ class XcheduleAPI < Sinatra::Base
     end
   end
 
+  # Activity owner add participant to activity
   post "/#{API_VER}/activity/participant/?" do
     content_type 'application/json'
 
@@ -33,6 +34,7 @@ class XcheduleAPI < Sinatra::Base
     end
   end
 
+  # Activity owner update activity info
   patch "/#{API_VER}/activity/?" do
     content_type 'application/json'
 

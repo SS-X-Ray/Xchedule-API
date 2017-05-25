@@ -25,31 +25,19 @@ class XcheduleAPI < Sinatra::Base
     end
   end
 
-  # get '/api/v1/account/participants/' do
-  #   content_type 'application/json'
-  #
-  #   participant_id = params[:participant_id]
-  #   participant = Account[id: participant_id]
-  #   halt 404, "Cannot find account #{participant_id}" if participant.nil?
-  #
-  #   activities = participant.activities
-  #
-  #   if activities
-  #     JSON.pretty_generate(activities: activities)
-  #   else
-  #     halt 401, "No activities in id #{participant_id}"
-  #   end
-  # end
-
+  # Create Account when Register
   post '/api/v1/account/?' do
     begin
       registration_info = JsonRequestBody.parse_symbolize(request.body.read)
-      CreateAccount.call(registration_info)
+      new_account = CreateAccount.call(registration_info)
     rescue => e
       logger.info "FAILED to create new account: #{e.inspect}"
       halt 400
     end
 
+    new_location = URI.join(@request_url.to_s + '/', new_account.username).to_s
+
     status 201
+    headers('Location' => new_location)
   end
 end
