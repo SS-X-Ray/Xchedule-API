@@ -1,20 +1,5 @@
-require 'sequel'
-require 'json'
-
 # Holds and persists an account's information
-class Account < Sequel::Model
-  one_to_many :organized_activities, class: :Activity, key: :organizer_id
-  many_to_many :activities,
-               join_table: :accounts_activities,
-               left_key: :participant_id, right_key: :activity_id
-
-  plugin :timestamps, update_on_create: true
-
-  plugin :association_dependencies, organized_activities: :destroy
-
-  plugin :whitelist_security
-  set_allowed_columns :username, :email
-
+class Account < BaseAccount
   def password=(new_password)
     new_salt = SecureDB.new_salt
     hashed = SecureDB.hash_password(new_salt, new_password)
@@ -25,14 +10,5 @@ class Account < Sequel::Model
   def password?(try_password)
     try_hashed = SecureDB.hash_password(salt, try_password)
     try_hashed == password_hash
-  end
-
-  def to_json(options = {})
-    JSON({
-           type: 'account',
-           id: id,
-           username: username,
-           email: email
-         }, options)
   end
 end

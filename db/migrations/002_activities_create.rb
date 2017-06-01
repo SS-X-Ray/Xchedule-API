@@ -5,7 +5,7 @@ Sequel.migration do
     create_table(:activities) do
       # String :id, type: :uuid, primary_key: true
       primary_key :id
-      foreign_key :organizer_id, :accounts
+      foreign_key :organizer_id, :base_accounts
       String :name, null: false
       String :possible_time_secure, text: true
       String :result_time_secure, text: true
