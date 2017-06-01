@@ -8,7 +8,7 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       requesting_account = authenticated_account(env)
-      target_account = Account[params[:account_id]]
+      target_account = BaseAccount[params[:account_id]]
 
       viewable_activities =
         ActivityPolicy::Scope.new(requesting_account, target_account).viewable
