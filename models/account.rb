@@ -5,7 +5,7 @@ require 'json'
 class BaseAccount < Sequel::Model
   one_to_many :organized_activities, class: :Activity, key: :organizer_id
   many_to_many :activities,
-               join_table: :accounts_activities,
+               join_table: :base_accounts_activities,
                left_key: :participant_id, right_key: :activity_id
 
   plugin :timestamps, update_on_create: true
