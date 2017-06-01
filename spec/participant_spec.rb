@@ -46,10 +46,10 @@ describe 'Testing Participant resource routes' do
   describe 'Getting participate activities' do
     it 'HAPPY: should find all activies a account participate' do
       AddParticipantToActivity.call(activity_id: @exist_activity.id, participant_id: @acc2.id)
-      get "#{API_VER}/account/participants/#{@acc2.id}"
+      get "#{API_VER}/account/#{@acc2.id}"
       _(last_response.status).must_equal 200
       parsed_activities = JSON.parse(last_response.body)
-      _(parsed_activities['activities'][0]['id']).must_equal @exist_activity.id
+      _(parsed_activities['data']['username']).must_equal @acc2.username
     end
 
     it 'SAD: should not find activities for not existing account' do

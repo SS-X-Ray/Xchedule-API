@@ -17,14 +17,17 @@ describe 'Testing Activity resource routes' do
     it 'HAPPY: should create a new unique Activity' do
       req_header = { 'CONTENT_TYPE' => 'application/json' }
       req_body = { organizer_id: @acc1.id, name: 'Meeting' }.to_json
-      post '/api/v1/activity/', req_body, req_header
+      post "/api/v1/accounts/#{@acc1.id}/organized_activities", req_body, req_header
       _(last_response.status).must_equal 201
     end
   end
 
   describe 'Can find existing activity' do
     it 'HAPPY: should find an existing activity' do
-      get "/api/v1/activity/#{@new_activity.id}"
+      auth = AuthenticateAccount.call(email: 'xray@nthu.edu.tw',
+                                      password: 'mypassword')
+      auth_headers = { 'HTTP_AUTHORIZATION' => "Bearer #{auth[:auth_token]}" }
+      get "/api/v1/activity/#{@new_activity.id}", nil, auth_headers
       _(last_response.status).must_equal 200
 
       results = JSON.parse(last_response.body)

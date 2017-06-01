@@ -42,8 +42,8 @@ namespace :db do
   end
 
   task :reset_seeds do
-  tables = [:activities, :accounts]
-  tables.each { |table| DB[table].delete }
+    tables = [:activities, :accounts]
+    tables.each { |table| DB[table].delete }
   end
 
   desc 'Seeds the development database'
@@ -73,5 +73,9 @@ namespace :crypto do
   desc 'Create sample cryptographic key for database'
   task :db_key do
     puts "DB_KEY: #{SecureDB.generate_key}"
+  end
+
+  task :token_key do
+    puts "TOKEN_KEY: #{AuthToken.generate_key}"
   end
 end

@@ -44,10 +44,17 @@ class Activity < Sequel::Model
 
   def to_json(options = {})
     JSON({ id: id,
-           name: name,
-           possible_time: possible_time,
-           result_time: result_time,
-           location: location },
+           attributes: {
+             name: name,
+             possible_time: possible_time,
+             result_time: result_time,
+             location: location
+           },
+           relationships: {
+             organizer: organizer,
+             participants: participants
+           }
+         },
          options)
   end
 end
