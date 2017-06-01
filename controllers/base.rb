@@ -22,7 +22,7 @@ class XcheduleAPI < Sinatra::Base
     scheme, auth_token = env['HTTP_AUTHORIZATION'].split(' ')
     return nil unless scheme.match?(/^Bearer$/i)
     account_payload = AuthToken.payload(auth_token)
-    Account[account_payload['id']]
+    BaseAccount[account_payload['id']]
     # scheme.match?(/^Bearer$/i) ? account_payload : nil
   end
 
