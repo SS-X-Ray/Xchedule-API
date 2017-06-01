@@ -5,8 +5,10 @@ require 'json'
 class BaseAccount < Sequel::Model
   one_to_many :organized_activities, class: :Activity, key: :organizer_id
   many_to_many :activities,
-               join_table: :base_accounts_activities,
+               join_table: :activities_base_accounts,
                left_key: :participant_id, right_key: :activity_id
+
+  plugin :single_table_inheritance, :type
 
   plugin :timestamps, update_on_create: true
 
@@ -17,7 +19,7 @@ class BaseAccount < Sequel::Model
 
   def to_json(options = {})
     JSON({
-           type: 'account',
+           type: type,
            id: id,
            username: username,
            email: email
