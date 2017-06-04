@@ -7,6 +7,7 @@ gem 'sequel'
 gem 'sinatra'
 
 gem 'hirb'
+gem 'http'
 gem 'tux'
 
 gem 'econfig'
