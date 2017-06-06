@@ -22,17 +22,19 @@ class XcheduleAPI < Sinatra::Base
 
   # Make a new activity
   post '/api/v1/accounts/:id/organized_activities/?' do
+    content_type 'application/json'
     begin
       new_data = JsonRequestBody.parse_symbolize(request.body.read)
       saved_activity = CreateActivityForOrganizer.call(new_data)
-      new_location = URI.join(@request_url.to_s + '/',
-                              saved_activity.id.to_s).to_s
+      JSON.pretty_generate(activity_id: saved_activity.id)
+      # new_location = URI.join(@request_url.to_s + '/',
+      #                         saved_activity.id.to_s).to_s
     rescue => e
       logger.info "FAILED to create new activity: #{e.inspect}"
       halt 400
     end
 
-    status 201
-    headers('Location' => new_location)
+    # status 201
+    # headers('Location' => new_location)
   end
 end

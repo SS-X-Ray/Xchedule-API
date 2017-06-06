@@ -61,7 +61,7 @@ class XcheduleAPI < Sinatra::Base
     email = params['email']
     account = BaseAccount.where(email: email).first
     if account
-      JSON.pretty_generate(username: account.username)
+      JSON.pretty_generate(id: account.id,username: account.username)
     else
       halt 401, "ACCOUNT NOT VALID: #{email}"
     end

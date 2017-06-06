@@ -22,7 +22,8 @@ class BaseAccount < Sequel::Model
            type: type,
            id: id,
            username: username,
-           email: email
+           email: email,
+           access_token: access_token
          }, options)
   end
 
