@@ -9,6 +9,8 @@ Sequel.migration do
       String :username, null: false, unique: true
       String :email, null: false, unique: true
       String :password_hash, text: true
+      String :access_token_secure, text: true
+      # String :access_token
       # String :salt, null: false
       String :salt
       DateTime :created_at

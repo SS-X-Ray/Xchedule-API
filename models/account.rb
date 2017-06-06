@@ -15,7 +15,7 @@ class BaseAccount < Sequel::Model
   plugin :association_dependencies, organized_activities: :destroy
 
   plugin :whitelist_security
-  set_allowed_columns :username, :email
+  set_allowed_columns :username, :email, :access_token
 
   def to_json(options = {})
     JSON({
@@ -24,6 +24,15 @@ class BaseAccount < Sequel::Model
            username: username,
            email: email
          }, options)
+  end
+
+
+  def access_token=(ptime_plain)
+    self.access_token_secure = SecureDB.encrypt(ptime_plain)
+  end
+
+  def access_token
+    SecureDB.decrypt(access_token_secure)
   end
 end
 
@@ -35,7 +44,6 @@ class Account < BaseAccount
     self.salt = new_salt
     self.password_hash = hashed
   end
-
   def password?(try_password)
     try_hashed = SecureDB.hash_password(salt, try_password)
     try_hashed == password_hash
