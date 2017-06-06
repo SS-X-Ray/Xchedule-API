@@ -40,4 +40,19 @@ class XcheduleAPI < Sinatra::Base
     status 201
     headers('Location' => new_location)
   end
+
+  # Add access_token into account when login by usual way
+  patch "/#{API_VER}/account/access_token/?" do
+    content_type 'application/json'
+    begin
+      update_data = JsonRequestBody.parse_symbolize(request.body.read)
+      puts "#{update_data}"
+      AddAccessTokenToAccount.call(update_data)
+    rescue => e
+      error_msg = "FAILED to update partial Activity info: #{e.inspect}"
+      logger.info error_msg
+      halt 400, error_msg
+    end
+    status 201
+  end
 end

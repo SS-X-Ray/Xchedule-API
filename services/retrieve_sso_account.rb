@@ -9,7 +9,6 @@ class AuthenticateSsoAccount
   def call(access_token)
     google_account = get_google_account(access_token)
     sso_account = find_or_create_sso_account(google_account)
-
     [sso_account, AuthToken.create(sso_account)]
   end
 
@@ -18,10 +17,12 @@ class AuthenticateSsoAccount
   def get_google_account(access_token)
     google_account = HTTP.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=#{access_token}")
                          .parse
-    { username: google_account['name'], email: google_account['email'] }
+    { username: google_account['name'],
+      email: google_account['email'],
+      access_token: access_token }
   end
 
   def find_or_create_sso_account(google_account)
-    SsoAccount.first(google_account) || SsoAccount.create(google_account)
+    SsoAccount.first(email: google_account[:email]) || SsoAccount.create(google_account)
   end
 end
