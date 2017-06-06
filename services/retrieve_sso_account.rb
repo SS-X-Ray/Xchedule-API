@@ -1,6 +1,6 @@
 require 'http'
 
-# Find or create an SsoAccount based on Github code
+# Find or create an SsoAccount based on Google code
 class AuthenticateSsoAccount
   def initialize(config)
     @config = config

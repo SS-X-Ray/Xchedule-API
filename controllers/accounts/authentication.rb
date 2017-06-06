@@ -22,7 +22,7 @@ class XcheduleAPI < Sinatra::Base
       { account: sso_account, auth_token: auth_token }.to_json
     rescue => e
       puts e.inspect
-      logger.info "FAILED to validate Github account: #{e.inspect}"
+      logger.info "FAILED to validate Google account: #{e.inspect}"
       halt 400
     end
   end
