@@ -46,7 +46,6 @@ class XcheduleAPI < Sinatra::Base
     content_type 'application/json'
     begin
       update_data = JsonRequestBody.parse_symbolize(request.body.read)
-      puts "#{update_data}"
       AddAccessTokenToAccount.call(update_data)
     rescue => e
       error_msg = "FAILED to update partial Activity info: #{e.inspect}"
@@ -54,5 +53,17 @@ class XcheduleAPI < Sinatra::Base
       halt 400, error_msg
     end
     status 201
+  end
+
+  # Get email from username
+  get "/#{API_VER}/account/parse/:email" do
+    content_type 'application/json'
+    email = params['email']
+    account = BaseAccount.where(email: email).first
+    if account
+      JSON.pretty_generate(username: account.username)
+    else
+      halt 401, "ACCOUNT NOT VALID: #{email}"
+    end
   end
 end
