@@ -3,6 +3,7 @@ ruby '2.4.0'
 
 gem 'json'
 gem 'puma'
+gem 'rake'
 gem 'sequel'
 gem 'sinatra'
 
@@ -23,7 +24,6 @@ group :test do
   gem 'minitest-rg'
   gem 'rack'
   gem 'rack-test'
-  gem 'rake'
 end
 
 group :development, :test do
