@@ -27,7 +27,6 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rubocop'
   gem 'sqlite3'
 end
 
