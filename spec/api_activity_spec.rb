@@ -18,7 +18,7 @@ describe 'Testing Activity resource routes' do
       req_header = { 'CONTENT_TYPE' => 'application/json' }
       req_body = { organizer_id: @acc1.id, name: 'Meeting' }.to_json
       post "/api/v1/accounts/#{@acc1.id}/organized_activities", req_body, req_header
-      _(last_response.status).must_equal 201
+      _(last_response.status).must_equal 200
     end
   end
 
@@ -31,7 +31,7 @@ describe 'Testing Activity resource routes' do
       _(last_response.status).must_equal 200
 
       results = JSON.parse(last_response.body)
-      _(results['Name']).must_equal @new_activity.name
+      _(results['name']).must_equal @new_activity.name
     end
 
     it 'SAD: should not find non-existent activity' do
