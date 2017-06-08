@@ -7,9 +7,12 @@ class XcheduleAPI < Sinatra::Base
 
     begin
       activity = Activity.find(id: params[:id])
-      output = { Name: activity.name, Location: activity.location,
-                 Possible_Time: activity.possible_time,
-                 Result_Time: activity.result_time }
+      output = { name: activity.name,
+                 id: activity.id,
+                 people: activity.participants << activity.organizer,
+                 location: activity.location,
+                 possible_time: activity.possible_time,
+                 result_time: activity.result_time }
       JSON.pretty_generate(output)
     rescue => e
       logger.info "FAILED to GET Activity: #{e.inspect}"
